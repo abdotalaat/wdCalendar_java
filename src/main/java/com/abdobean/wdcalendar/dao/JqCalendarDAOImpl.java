@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public class JqCalendarDAOImpl implements JqCalendarDAO {
 	private SessionFactory sessionFactory;
 
