@@ -2,6 +2,7 @@ package com.abdobean.wdcalendar.model;
 // Generated Jun 22, 2015 11:18:47 AM by Hibernate Tools 3.2.1.GA
 
 
+import com.abdobean.wdcalendar.controller.utilities;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -93,6 +94,7 @@ public class Jqcalendar  implements java.io.Serializable {
     }
     
     @Column(name="StartTime", length=19)
+    @DateTimeFormat(pattern="MM/dd/yyyy HH:mm")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     public DateTime getStartTime() {
         return this.startTime;
@@ -103,6 +105,7 @@ public class Jqcalendar  implements java.io.Serializable {
     }
     
     @Column(name="EndTime", length=19)
+    @DateTimeFormat(pattern="MM/dd/yyyy HH:mm")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     public DateTime getEndTime() {
         return this.endTime;
@@ -137,6 +140,11 @@ public class Jqcalendar  implements java.io.Serializable {
     
     public void setRecurringRule(String recurringRule) {
         this.recurringRule = recurringRule;
+    }
+
+    @Override
+    public String toString() {
+        return "["+id+","+subject+","+utilities.convertDateTimeToString(startTime)+","+utilities.convertDateTimeToString(endTime)+","+isAllDayEvent+",0,0,"+color+","+location+"]";
     }
 
 

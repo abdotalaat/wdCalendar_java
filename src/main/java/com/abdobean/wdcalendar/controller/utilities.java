@@ -4,6 +4,8 @@
  */
 package com.abdobean.wdcalendar.controller;
 
+import com.abdobean.wdcalendar.model.Jqcalendar;
+import com.abdobean.wdcalendar.model.jqcalendarSummary;
 import java.util.Calendar;
 import java.util.Date;
 import org.joda.time.DateTime;
@@ -17,16 +19,16 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class utilities {
 
-    public static String[] getWeekRange(String date) {
+    public static DateTime[] getWeekRange(String date) {
 
-        String[] dateTimes = new String[2];
+        DateTime[] dateTimes = new DateTime[2];
         DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy");
         DateTime dt = formatter.parseDateTime(date);
         DateTime weekStart = dt.withDayOfWeek(DateTimeConstants.MONDAY).withTimeAtStartOfDay();
         DateTime weekEnd = dt.withDayOfWeek(DateTimeConstants.SUNDAY).plusDays(1).withTimeAtStartOfDay();
 
-        dateTimes[0] = weekStart.toString(formatter);
-        dateTimes[1] = weekEnd.toString(formatter);
+        dateTimes[0] = weekStart;
+        dateTimes[1] = weekEnd;
         System.out.println("now: " + dt);
         System.out.println("weekStart: " + weekStart);
         System.out.println("weekEnd: " + weekEnd);
@@ -67,5 +69,27 @@ public class utilities {
         final DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm");
         DateTime dt = dtf.parseDateTime(date);
         return dt;
+    }
+    
+    public static String convertDateTimeToString(DateTime date) {
+        final DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm");
+        String dt = date.toString(dtf);
+        return dt;
+    }
+    
+    public static jqcalendarSummary convertFromJqcalendarTojqcalendarSummary(Jqcalendar jqcalendar)
+    {
+        jqcalendarSummary summary = new jqcalendarSummary();
+        
+        summary.setColor(jqcalendar.getColor());
+        summary.setDescription(jqcalendar.getDescription());
+        summary.setEndTime(convertDateTimeToString(jqcalendar.getEndTime()));
+        summary.setId(jqcalendar.getId());
+        summary.setIsAllDayEvent(jqcalendar.getIsAllDayEvent());
+        summary.setLocation(jqcalendar.getLocation());
+        summary.setRecurringRule(jqcalendar.getRecurringRule());
+        summary.setStartTime(convertDateTimeToString(jqcalendar.getStartTime()));
+        summary.setSubject(jqcalendar.getSubject());
+        return summary;
     }
 }
