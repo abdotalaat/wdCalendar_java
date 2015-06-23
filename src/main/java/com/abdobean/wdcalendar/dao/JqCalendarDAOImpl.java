@@ -34,8 +34,8 @@ public class JqCalendarDAOImpl implements JqCalendarDAO {
         @Transactional
     public int add(Jqcalendar jqcalendar) {
             boolean b = true;
-           Serializable i =  sessionFactory.getCurrentSession().save(jqcalendar);
-        return 1;
+            sessionFactory.getCurrentSession().save(jqcalendar);
+        return jqcalendar.getId();
     }
 
 }
