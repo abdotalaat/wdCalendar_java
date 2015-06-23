@@ -30,7 +30,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
     </bean>
-    
+    <bean id="utilities" class="com.abdobean.wdcalendar.controller.utilities"></bean>
    
     <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 

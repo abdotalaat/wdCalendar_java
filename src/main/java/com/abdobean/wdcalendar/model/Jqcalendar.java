@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -25,7 +26,8 @@ import org.springframework.format.annotation.DateTimeFormat;
     ,catalog="wdcalendar"
 )
 public class Jqcalendar  implements java.io.Serializable {
-
+@Autowired
+utilities utilities; 
 
      private Integer id;
      private String subject;
@@ -144,7 +146,7 @@ public class Jqcalendar  implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "["+id+","+subject+","+utilities.convertDateTimeToString(startTime)+","+utilities.convertDateTimeToString(endTime)+","+isAllDayEvent+",0,0,"+color+","+location+"]";
+        return "["+id+","+subject+","+utilities.convertDateTimeToString(startTime)+","+utilities.convertDateTimeToString(endTime)+","+isAllDayEvent+",0,0,"+color+",1,"+location+",'']";
     }
 
 

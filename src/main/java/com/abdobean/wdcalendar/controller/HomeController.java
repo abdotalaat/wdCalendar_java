@@ -30,6 +30,8 @@ public class HomeController {
     JqCalendarDAO jqCalendarDAO;
     @Autowired
     private HttpServletRequest context;
+    @Autowired
+    utilities utilities;
 
     @RequestMapping(value = "/")
     public ModelAndView home() {
@@ -46,8 +48,8 @@ public class HomeController {
         if (method.equals("list")) {
             System.out.println(showdate);
             System.out.println(viewtype);
-            res =list(showdate, viewtype);
-            
+            res = list(showdate, viewtype);
+
         } else if (method.equals("add")) {
             res = addCalendar();
         }
@@ -62,45 +64,20 @@ public class HomeController {
 
         if (viewType.equals("week")) {
             dateTimes = utilities.getWeekRange(date);
-            
+
         } else if (viewType.equals("day")) {
-           // dateTimes = utilities.getDayRange(date);
+            dateTimes = utilities.getDayRange(date);
         } else {
-            //dateTimes = utilities.getmonthRange(date);
+            dateTimes = utilities.getmonthRange(date);
         }
 
 
         List<Jqcalendar> jqcalendars = jqCalendarDAO.list(dateTimes[0], dateTimes[1]);
         System.out.println(jqcalendars.size());
-      JSONArray jSONArray = new JSONArray();
-        for (Jqcalendar jqcalendar : jqcalendars) {
-            
-            JSONArray array = new JSONArray();
-            array.add(jqcalendar.getId());
-            array.add(jqcalendar.getSubject());
-            array.add(utilities.convertDateTimeToString(jqcalendar.getStartTime()));
-            array.add(utilities.convertDateTimeToString(jqcalendar.getEndTime()));
-            array.add(jqcalendar.getIsAllDayEvent());
-            array.add(0);
-            array.add(0);
-            array.add(jqcalendar.getColor());
-            array.add(jqcalendar.getLocation());
-            jSONArray.add(array);
-        }
-        JSONObject jSONObject = new JSONObject();
-        jSONObject.put("events", jSONArray);
-        jSONObject.put("issort", true);
-        jSONObject.put("start", utilities.convertDateTimeToString(dateTimes[0]));
-        jSONObject.put("end", utilities.convertDateTimeToString(dateTimes[1]));
-        jSONObject.put("error", null);
-        
-        
-        
-       
-        return jSONObject.toJSONString();
+        String json = utilities.createJqCalendarListJson(jqcalendars, dateTimes[0], dateTimes[1]);
+        return json;
     }
 
-    
     public String addCalendar() {
         Jqcalendar jqcalendar = new Jqcalendar();
         // System.out.println(context.getParameter("CalendarStartTime"));
