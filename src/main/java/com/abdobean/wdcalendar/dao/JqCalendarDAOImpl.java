@@ -1,12 +1,14 @@
 package com.abdobean.wdcalendar.dao;
 
 import com.abdobean.wdcalendar.model.Jqcalendar;
+import java.io.Serializable;
 import java.util.List;
 
 
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class JqCalendarDAOImpl implements JqCalendarDAO {
 	private SessionFactory sessionFactory;
 
+        @Autowired
 	public JqCalendarDAOImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -27,5 +30,12 @@ public class JqCalendarDAOImpl implements JqCalendarDAO {
 
 		return listUser;
 	}
+
+        @Transactional
+    public int add(Jqcalendar jqcalendar) {
+            boolean b = true;
+           Serializable i =  sessionFactory.getCurrentSession().save(jqcalendar);
+        return 1;
+    }
 
 }

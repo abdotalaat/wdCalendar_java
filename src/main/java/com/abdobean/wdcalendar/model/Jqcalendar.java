@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,8 +30,8 @@ public class Jqcalendar  implements java.io.Serializable {
      private String subject;
      private String location;
      private String description;
-     private LocalDate startTime;
-     private LocalDate endTime;
+     private DateTime startTime;
+     private DateTime endTime;
      private short isAllDayEvent;
      private String color;
      private String recurringRule;
@@ -42,7 +43,7 @@ public class Jqcalendar  implements java.io.Serializable {
     public Jqcalendar(short isAllDayEvent) {
         this.isAllDayEvent = isAllDayEvent;
     }
-    public Jqcalendar(String subject, String location, String description, LocalDate startTime, LocalDate endTime, short isAllDayEvent, String color, String recurringRule) {
+    public Jqcalendar(String subject, String location, String description, DateTime startTime, DateTime endTime, short isAllDayEvent, String color, String recurringRule) {
        this.subject = subject;
        this.location = location;
        this.description = description;
@@ -90,24 +91,24 @@ public class Jqcalendar  implements java.io.Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    @DateTimeFormat(pattern="MM/dd/yyyy")
+    
     @Column(name="StartTime", length=19)
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    public LocalDate getStartTime() {
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    public DateTime getStartTime() {
         return this.startTime;
     }
     
-    public void setStartTime(LocalDate startTime) {
+    public void setStartTime(DateTime startTime) {
         this.startTime = startTime;
     }
-    @DateTimeFormat(pattern="MM/dd/yyyy")
+    
     @Column(name="EndTime", length=19)
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    public LocalDate getEndTime() {
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    public DateTime getEndTime() {
         return this.endTime;
     }
     
-    public void setEndTime(LocalDate endTime) {
+    public void setEndTime(DateTime endTime) {
         this.endTime = endTime;
     }
     

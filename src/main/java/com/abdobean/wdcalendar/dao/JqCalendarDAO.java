@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface JqCalendarDAO {
 	public List<Jqcalendar> list();
+       public int  add(Jqcalendar jqcalendar);
 }
