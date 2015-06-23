@@ -40,4 +40,11 @@ public class JqCalendarDAOImpl implements JqCalendarDAO {
         return jqcalendar.getId();
     }
 
+        
+        @Transactional
+    public Jqcalendar getcalendar(int id) {
+           Jqcalendar jqcalendar = (Jqcalendar) sessionFactory.getCurrentSession().get(Jqcalendar.class, id);
+           return jqcalendar;
+    }
+
 }

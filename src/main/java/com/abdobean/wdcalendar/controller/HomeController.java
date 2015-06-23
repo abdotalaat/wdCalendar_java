@@ -40,6 +40,28 @@ public class HomeController {
         model.addObject("userList", listUsers);
         return model;
     }
+    
+    @RequestMapping(value = "/edit")
+    public ModelAndView edit() {
+        ModelAndView model = new ModelAndView("edit");
+        String id = context.getParameter("id");
+        if(id != null)
+        {
+            Jqcalendar jqcalendar= jqCalendarDAO.getcalendar(Integer.parseInt(id));
+            String startDateTime = utilities.convertDateTimeToJS(jqcalendar.getStartTime());
+            String endDateTime = utilities.convertDateTimeToJS(jqcalendar.getEndTime());
+            String[] stDT = startDateTime.split(" ");
+            String[] edDT = endDateTime.split(" ");
+            model.addObject("event", jqcalendar);
+            model.addObject("stpartdate", stDT[0]);
+            model.addObject("stparttime", stDT[1]);
+            model.addObject("etpartdate", edDT[0]);
+            model.addObject("etparttime", edDT[1]);
+        }
+       
+        return model;
+    }
+    
 
     @RequestMapping(value = "/calendar/rest", method = RequestMethod.POST)
     public @ResponseBody

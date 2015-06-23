@@ -80,6 +80,13 @@ public class utilities {
         return dt;
     }
     
+    //m/d/Y H:i
+    public  String convertDateTimeToJS(DateTime date) {
+        final DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm");
+        String dt = date.toString(dtf);
+        return dt;
+    }
+    
     public  jqcalendarSummary convertFromJqcalendarTojqcalendarSummary(Jqcalendar jqcalendar)
     {
         jqcalendarSummary summary = new jqcalendarSummary();
