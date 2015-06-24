@@ -196,7 +196,7 @@
       </div>        
       <div class="infocontainer">            
 <!--        <form action="php/datafeed.php?method=adddetails><?php echo isset($event)?"&id=".$event->Id:""; ?>" class="fform" id="fmEdit" method="post">                 -->
-        <form action='calendar/rest?method=adddetails<c:if test="${not empty event}"><c:out value="&id=${event.id}"/></c:if>>' class="fform" id="fmEdit" method="post">                 
+        <form action='calendar/rest?method=adddetails<c:if test="${not empty event}"><c:out value="&id=${event.id}"/></c:if>' class="fform" id="fmEdit" method="post">                 
           <label>                    
             <span>                        *Subject:              
             </span>                    

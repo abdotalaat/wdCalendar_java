@@ -7,6 +7,7 @@ import java.util.List;
 
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
@@ -45,6 +46,18 @@ public class JqCalendarDAOImpl implements JqCalendarDAO {
     public Jqcalendar getcalendar(int id) {
            Jqcalendar jqcalendar = (Jqcalendar) sessionFactory.getCurrentSession().get(Jqcalendar.class, id);
            return jqcalendar;
+    }
+
+        @Transactional
+    public int update(Jqcalendar jqcalendar) {
+         sessionFactory.getCurrentSession().saveOrUpdate(jqcalendar);
+        return jqcalendar.getId();
+    }
+
+        @Transactional
+    public void remove(int id) {
+        Query query = sessionFactory.getCurrentSession().createQuery("delete from Jqcalendar where id="+id+"");
+        query.executeUpdate();
     }
 
 }

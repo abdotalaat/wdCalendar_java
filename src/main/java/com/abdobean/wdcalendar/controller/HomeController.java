@@ -40,14 +40,13 @@ public class HomeController {
         model.addObject("userList", listUsers);
         return model;
     }
-    
+
     @RequestMapping(value = "/edit")
     public ModelAndView edit() {
         ModelAndView model = new ModelAndView("edit");
         String id = context.getParameter("id");
-        if(id != null)
-        {
-            Jqcalendar jqcalendar= jqCalendarDAO.getcalendar(Integer.parseInt(id));
+        if (id != null) {
+            Jqcalendar jqcalendar = jqCalendarDAO.getcalendar(Integer.parseInt(id));
             String startDateTime = utilities.convertDateTimeToJS(jqcalendar.getStartTime());
             String endDateTime = utilities.convertDateTimeToJS(jqcalendar.getEndTime());
             String[] stDT = startDateTime.split(" ");
@@ -58,15 +57,16 @@ public class HomeController {
             model.addObject("etpartdate", edDT[0]);
             model.addObject("etparttime", edDT[1]);
         }
-       
+
         return model;
     }
-    
 
     @RequestMapping(value = "/calendar/rest", method = RequestMethod.POST)
     public @ResponseBody
     String getShopInJSON(@RequestParam("method") String method, @RequestParam(value = "showdate", required = false) String showdate, @RequestParam(value = "viewtype", required = false) String viewtype) {
         String res = "";
+
+        System.out.println(method);
         if (method.equals("list")) {
             System.out.println(showdate);
             System.out.println(viewtype);
@@ -74,6 +74,12 @@ public class HomeController {
 
         } else if (method.equals("add")) {
             res = addCalendar();
+        } else if (method.equals("adddetails")) {
+            res = addDetails();
+        } else if (method.equals("update")) {
+            res = update();
+        } else if (method.equals("remove")) {
+            res = remove();
         }
 
         return res;
@@ -119,5 +125,88 @@ public class HomeController {
         } else {
             return "{\"IsSuccess\":true,\"Msg\":\"add faild\"";
         }
+    }
+
+    public String addDetails() {
+        String stpartdate = context.getParameter("stpartdate");
+        String stparttime = context.getParameter("stparttime");
+        String etpartdate = context.getParameter("etpartdate");
+        String etparttime = context.getParameter("etparttime");
+
+        String start = stpartdate + " " + stparttime;
+        String end = etpartdate + " " + etparttime;
+
+
+        String IsAllDayEvent = context.getParameter("IsAllDayEvent");
+        String CalendarTitle = context.getParameter("Subject");
+        String Description = context.getParameter("Description");
+        String Location = context.getParameter("Location");
+        String colorvalue = context.getParameter("colorvalue");
+        String timezone = context.getParameter("timezone");
+
+
+        Jqcalendar jqcalendar = new Jqcalendar();
+        jqcalendar.setColor(colorvalue);
+        jqcalendar.setDescription(Description);
+        jqcalendar.setEndTime(utilities.getdateDateTime(end));
+        jqcalendar.setStartTime(utilities.getdateDateTime(start));
+        if (IsAllDayEvent != null) {
+            jqcalendar.setIsAllDayEvent(new Short("1"));
+        } else {
+            jqcalendar.setIsAllDayEvent(new Short("0"));
+        }
+
+        jqcalendar.setLocation(Location);
+        jqcalendar.setSubject(CalendarTitle);
+
+
+
+
+        int ids = 0;
+
+        String id = context.getParameter("id");
+        if (id != null) {
+            jqcalendar.setId(Integer.parseInt(id));
+            ids = jqCalendarDAO.update(jqcalendar);
+        } else {
+            ids = jqCalendarDAO.add(jqcalendar);
+        }
+
+
+        if (ids > 0) {
+            return "{\"IsSuccess\":true,\"Msg\":\"add success\",\"Data\":" + id + "}";
+        } else {
+            return "{\"IsSuccess\":true,\"Msg\":\"add faild\"";
+        }
+
+    }
+
+    public String update() {
+
+        String calendarId = context.getParameter("calendarId");
+        String CalendarStartTime = context.getParameter("CalendarStartTime");
+        String CalendarEndTime = context.getParameter("CalendarEndTime");
+
+        int idCal = Integer.parseInt(calendarId);
+        Jqcalendar jqcalendar = jqCalendarDAO.getcalendar(idCal);
+        jqcalendar.setId(idCal);
+        jqcalendar.setStartTime(utilities.getdateDateTime(CalendarStartTime));
+        jqcalendar.setEndTime(utilities.getdateDateTime(CalendarEndTime));
+
+        int id = jqCalendarDAO.update(jqcalendar);
+
+        if (id > 0) {
+            return "{\"IsSuccess\":true,\"Msg\":\"add success\",\"Data\":" + id + "}";
+        } else {
+            return "{\"IsSuccess\":true,\"Msg\":\"add faild\"";
+        }
+
+
+    }
+
+    public String remove() {
+        String calendarId = context.getParameter("calendarId");
+        jqCalendarDAO.remove(Integer.parseInt(calendarId));
+        return "{\"IsSuccess\":true,\"Msg\":\"add success\"}";
     }
 }
