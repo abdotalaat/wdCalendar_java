@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name="jqcalendar"
-    ,catalog="wdcalendar"
+    ,catalog="mycaaledar"
 )
 public class Jqcalendar  implements java.io.Serializable {
 @Autowired
