@@ -105,8 +105,8 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.3.0.M0</version>
             </plugin>
-        </plugins>
-        <plugin>
+            
+             <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-dependency-plugin</artifactId>
     <version>2.3</version>
@@ -127,6 +127,8 @@
         </execution>
     </executions>
 </plugin>
+        </plugins>
+       
         
     </build>
 </project>
